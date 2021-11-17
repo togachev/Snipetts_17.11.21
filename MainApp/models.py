@@ -7,3 +7,4 @@ class Snippet(models.Model):
     code = models.TextField(max_length=5000)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
+    rate = models.PositiveSmallIntegerField(null=False, blank=True, default=1)
