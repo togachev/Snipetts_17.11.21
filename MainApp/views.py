@@ -27,5 +27,5 @@ def single_snippets_page(request, id):
     except ObjectDoesNotExist:
         raise Http404
     context = {'pagename': 'Просмотр сниппета',
-               "snippets": snippet}
+               "snippet": snippet}
     return render(request, 'pages/snippet.html', context)
