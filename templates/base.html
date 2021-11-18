@@ -10,7 +10,11 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
     <!-- Custom styles for this template -->
     <style>
@@ -38,7 +42,38 @@
             text-align: center;
             height: 100%;
         }
+        p {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            white-space: break-spaces;
+            display: inline-block;
 
+        }
+        .parent {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: auto;
+            white-space: nowrap;
+            text-align: center;
+            font-size: 0;
+            &:before {
+                height: 100%;
+                display: inline-block;
+                vertical-align: middle;
+                content: '';
+            }
+        }
+
+        .block {
+            display: inline-block;
+            white-space: normal;
+            vertical-align: middle;
+            text-align: left;
+            background: #60a839;
+        }
     </style>
 </head>
 

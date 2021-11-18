@@ -24,6 +24,7 @@
                     <th scope="col">Дата создания</th>
                     <th scope="col">Дата изменения</th>
                     <th align="center" scope="col">Редактировать</th>
+                    <th align="center" scope="col">Удалить</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,13 +33,15 @@
                     <tr>
                         <td scope="row">{{ snippet.id }}</td>
                         <td>
-                            <a href="{% url 'snippet-page' id=snippet.id %}">{{ snippet.name }}</a>
+                            <a href="{% url 'snippet-page' pk=snippet.id %}">{{ snippet.name }}</a>
                         </td>
                         <td>{{ snippet.creation_date }}</td>
                         <td>{{ snippet.update_date }}</td>
                         <td>
-                            <a href="{% url 'snippet-delete' id=snippet.id %}"><i class="fas fa-trash-alt" sty></i></a>
-                            <a href="{% url 'snippet-edit' id=snippet.id %}"><i class="fas fa-edit"></i></a>
+                            <a href="{% url 'snippet-edit' pk=snippet.id %}"><i class="fas fa-edit"></i></a>
+                        </td>
+                        <td>
+                            <a href="{% url 'snippet-delete' pk=snippet.id %}"><i class="fas fa-trash-alt"></i></a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -46,7 +49,7 @@
                 </tbody>
             </table>
             <div align="right">
-                <i style="color: gray;">Всего сниппетов: 2</i>
+                <i style="color: gray;">Всего сниппетов: {{ snippets|length }}</i>
             </div>
         </div>
     </div>

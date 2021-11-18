@@ -3,24 +3,27 @@ from django.shortcuts import render, redirect
 from MainApp.models import Snippet
 from django.core.exceptions import ObjectDoesNotExist
 from MainApp.forms import SnippetForm
+from django.utils.datastructures import MultiValueDictKeyError
+
+
 
 def index_page(request):
     context = {'pagename': 'PythonBin'}
     return render(request, 'pages/index.html', context)
 
-
 def snippets_page(request):
     snippets = Snippet.objects.all()
     context = {
         'pagename': 'Просмотр сниппетов',
-        "snippets": snippets
+        "snippets": snippets,
     }
     return render(request, 'pages/view_snippets.html', context)
 
 
-def single_snippet_page(request, id):
+def single_snippet_page(request, pk):
+
     try:
-        snippet = Snippet.objects.get(id=id)
+        snippet = Snippet.objects.get(pk=pk)
     except ObjectDoesNotExist:
         raise Http404
     context = {
@@ -44,18 +47,18 @@ def add_snippet_page(request):
         if form.is_valid():
             form.save()
             return redirect("snippets-list")
-        return render(request, 'add_snippet.html', {'form': form})
+        return render(request, 'pages/add_snippet.html', {'form': form})
 
 
-def snippet_delete(request, id):
-    snippet = Snippet.objects.get(id=id)
+def snippet_delete(request, pk):
+    snippet = Snippet.objects.get(id=pk)
     snippet.delete()
     return redirect("snippets-list")
 
 
-def snippet_edit(request, id):
+def snippet_edit(request, pk):
     try:
-        snippet = Snippet.objects.get(id=id)
+        snippet = Snippet.objects.get(id=pk)
     except ObjectDoesNotExist:
         raise Http404
     if request.method == "GET":
@@ -72,4 +75,5 @@ def snippet_edit(request, id):
         snippet.code = form_data["code"]
         snippet.save()
         return redirect("snippets-list")
+
 

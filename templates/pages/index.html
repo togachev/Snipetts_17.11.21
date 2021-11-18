@@ -5,9 +5,9 @@
 
     <div class="row">
         <div class="col">
-            <p>Добро пожаловать, уважаемый пользователь!
-            <p>На этом сайте ты сможешь сохранить свои заготовки кода на различных языках программирования<br>
-                А также делиться ими с другими пользователями...
+            <p>Добро пожаловать, уважаемый пользователь!</p><br>
+            <p>На этом сайте ты сможешь сохранить свои заготовки кода на различных языках программирования</p><br>
+            <p>А также делиться ими с другими пользователями...</p><br>
             <hr>
         </div>
     </div>
@@ -22,7 +22,7 @@
         <div class="col">
             <hr>
             <h4>Найти сниппет по номеру</h4>
-            <form action='' id="view_snippet_form">
+            <form action="{#{% url 'snippet-page' %}#}" id="view_snippet_form" method="get">
                 <div class="form-group row">
                     <label for="snippet_id" class="col-sm-2 col-form-label col-form-label-lg">Номер:</label>
                     <div class="col-sm-8">
