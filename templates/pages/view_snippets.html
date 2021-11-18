@@ -22,6 +22,8 @@
                     <th scope="col">ID</th>
                     <th scope="col">Название</th>
                     <th scope="col">Дата создания</th>
+                    <th scope="col">Дата изменения</th>
+                    <th align="center" scope="col">Редактировать</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -29,8 +31,15 @@
                 {% for snippet in snippets %}
                     <tr>
                         <td scope="row">{{ snippet.id }}</td>
-                        <td><a href="{% url 'snippet_page' id=snippet.id %}">{{ snippet.name }}</a></td>
+                        <td>
+                            <a href="{% url 'snippet-page' id=snippet.id %}">{{ snippet.name }}</a>
+                        </td>
                         <td>{{ snippet.creation_date }}</td>
+                        <td>{{ snippet.update_date }}</td>
+                        <td>
+                            <a href="{% url 'snippet-delete' id=snippet.id %}"><i class="fas fa-trash-alt" sty></i></a>
+                            <a href="{% url 'snippet-edit' id=snippet.id %}"><i class="fas fa-edit"></i></a>
+                        </td>
                     </tr>
                 {% endfor %}
 
