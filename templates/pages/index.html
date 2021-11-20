@@ -13,27 +13,31 @@
     </div>
 
     <div class="row mt-3">
-        <div class="col-4 offset-4">
-            <a href="{% url 'snippets-add' %}" class="btn btn-secondary btn-block">Добавить сниппет</a>
-        </div>
-    </div>
-
-    <div class="row mt-3">
         <div class="col">
-            <hr>
-            <h4>Найти сниппет по номеру</h4>
-            <form action="{#{% url 'snippet-page' %}#}" id="view_snippet_form" method="get">
-                <div class="form-group row">
-                    <label for="snippet_id" class="col-sm-2 col-form-label col-form-label-lg">Номер:</label>
-                    <div class="col-sm-8">
-                        <input type="number" class="form-control form-control-lg" id="snippet_id"
-                               placeholder="введите число">
+            {% for snippet in snippets %}
+                <fieldset disabled>
+                    <div class="row disabled">
+                        <div class="col">
+                            Номер: <input type="text" value="{{ snippet.id }}" class="form-control">
+                        </div>
+                        <div class="col">
+                            Название: <input type="text" value="{{ snippet.name }}" class="form-control">
+                        </div>
+                        <div class="col">
+                            Дата создания:<input type="text" value="{{ snippet.creation_date }}" class="form-control">
+                        </div>
                     </div>
-                    <div class="col-sm-2">
-                        <input type="submit" class="form-control form-control-lg btn btn-info" value="Найти">
+                    <hr>
+                    <div class="row">
+                        <div class="col">
+                            Код:
+                            <div class="" style="border:1px solid #ced4da; border-radius:5px;white-space: normal; padding: 1rem;">
+                                <p><pre>{{ snippet.code |linebreaks|safe|escape}}</pre></p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </fieldset>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

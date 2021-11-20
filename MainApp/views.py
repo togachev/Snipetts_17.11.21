@@ -3,12 +3,12 @@ from django.shortcuts import render, redirect
 from MainApp.models import Snippet
 from django.core.exceptions import ObjectDoesNotExist
 from MainApp.forms import SnippetForm
-from django.utils.datastructures import MultiValueDictKeyError
+from django.db.models import Q
 
 
 
 def index_page(request):
-    context = {'pagename': 'PythonBin'}
+    context = {'pagename': 'Главная страница'}
     return render(request, 'pages/index.html', context)
 
 def snippets_page(request):
@@ -21,11 +21,10 @@ def snippets_page(request):
 
 
 def single_snippet_page(request, pk):
-
     try:
-        snippet = Snippet.objects.get(pk=pk)
+        snippet = Snippet.objects.get(id=pk)
     except ObjectDoesNotExist:
-        raise Http404
+        raise Http404("Сниппет не найден..")
     context = {
         'pagename': 'Страница сниппета',
         "snippet": snippet,
@@ -76,4 +75,17 @@ def snippet_edit(request, pk):
         snippet.save()
         return redirect("snippets-list")
 
-
+def search_snippet(request):
+    id = request.GET.get('result')
+    if not id:
+        return redirect("home")
+    else:
+        try:
+            snippet = Snippet.objects.filter(Q(id__icontains=id))
+        except ObjectDoesNotExist:
+            raise Http404
+        context = {
+            'pagename': 'Результат поиска',
+            "snippets": snippet
+        }
+        return render(request, 'pages/index.html', context)

@@ -6,8 +6,8 @@ class SnippetForm(ModelForm):
     class Meta:
         model = Snippet
         # Описываем поля, которые будем заполнять в форме
-        fields = ['name', 'lang', 'code', 'rate']
-       # exclude = ['id']
+        fields = ['id', 'name', 'lang', 'code', 'rate']
+       # exclude = []
 
 #  настроить форму
 # https://django.fun/tutorials/usovershenstvovannoe-otobrazhenie-form-bootstrap-4-s-pomoshyu-django-crispy-forms/
