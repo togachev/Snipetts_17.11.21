@@ -3,41 +3,57 @@
 
 {% block content %}
 
-    <div class="row">
-        <div class="col">
-            <p>Добро пожаловать, уважаемый пользователь!</p><br>
-            <p>На этом сайте ты сможешь сохранить свои заготовки кода на различных языках программирования</p><br>
-            <p>А также делиться ими с другими пользователями...</p><br>
-            <hr>
-        </div>
-    </div>
 
+<div class="row mt-3">
+    <div class="col">
+        <h4>Найти сниппет по номеру</h4>
+        <form action="{% url 'search-snippet' %}" method="get">
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <input name="result" type="number" class="form-control form-control-lg"  placeholder="введите число">
+                </div>
+                <div class="col-sm-2">
+                    <input type="submit" class="form-control form-control-lg btn btn-info" value="Найти">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
     <div class="row mt-3">
+
         <div class="col">
-            {% for snippet in snippets %}
-                <fieldset disabled>
-                    <div class="row disabled">
-                        <div class="col">
-                            Номер: <input type="text" value="{{ snippet.id }}" class="form-control">
-                        </div>
-                        <div class="col">
-                            Название: <input type="text" value="{{ snippet.name }}" class="form-control">
-                        </div>
-                        <div class="col">
-                            Дата создания:<input type="text" value="{{ snippet.creation_date }}" class="form-control">
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col">
-                            Код:
-                            <div class="" style="border:1px solid #ced4da; border-radius:5px;white-space: normal; padding: 1rem;">
-                                <p><pre>{{ snippet.code |linebreaks|safe|escape}}</pre></p>
+            <hr>
+            {% if snippets %}
+                {% for snippet in snippets %}
+                    <fieldset disabled>
+                        <div class="row disabled">
+                            <div class="col">
+                                Номер: <input type="text" value="{{ snippet.id }}" class="form-control">
+                            </div>
+                            <div class="col">
+                                Название: <input type="text" value="{{ snippet.name }}" class="form-control">
+                            </div>
+                            <div class="col">
+                                Код: <input type="text" value="{{ snippet.lang }}" class="form-control">
+                            </div>
+                            <div class="col">
+                                Дата создания:<input type="text" value="{{ snippet.creation_date }}" class="form-control">
                             </div>
                         </div>
-                    </div>
-                </fieldset>
-            {% endfor %}
+                        <hr>
+                        <div class="row">
+                            <div class="col">
+                                Код:
+                                <div class="" style="border:1px solid #ced4da; border-radius:5px;white-space: normal; padding: 1rem;">
+                                    <p><pre>{{ snippet.code |linebreaks|safe|escape}}</pre></p>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                {% endfor %}
+            {% else %}
+                <div><i>{{ result_not_found }}</i></div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

@@ -14,7 +14,7 @@ def index_page(request):
 def snippets_page(request):
     snippets = Snippet.objects.all()
     context = {
-        'pagename': 'Просмотр сниппетов',
+        'pagename': 'Список сниппетов',
         "snippets": snippets,
     }
     return render(request, 'pages/view_snippets.html', context)
@@ -78,14 +78,21 @@ def snippet_edit(request, pk):
 def search_snippet(request):
     id = request.GET.get('result')
     if not id:
-        return redirect("home")
-    else:
-        try:
-            snippet = Snippet.objects.filter(Q(id__icontains=id))
-        except ObjectDoesNotExist:
-            raise Http404
         context = {
             'pagename': 'Результат поиска',
-            "snippets": snippet
+            'result_not_found':'Снипет не найден',
         }
         return render(request, 'pages/index.html', context)
+    try:
+        # полное совпадение
+        snippet = Snippet.objects.filter(Q(id__iexact=id))
+        # если результат содержит часть
+        # snippet = Snippet.objects.filter(Q(id__icontains=id))
+    except ObjectDoesNotExist:
+        snippet = None
+    context = {
+        'pagename': 'Результат поиска',
+        "snippets": snippet,
+        'result_not_found': 'Снипет не найден',
+    }
+    return render(request, 'pages/index.html', context)
