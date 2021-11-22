@@ -25,7 +25,7 @@ def single_snippet_page(request, pk):
     except ObjectDoesNotExist:
         raise Http404("Сниппет не найден..")
     context = {
-        'pagename': 'Страница сниппета',
+        'pagename': 'Сниппет',
         'name': 'Название',
         'lang': 'Язык',
         'creation_date': 'Создан',
