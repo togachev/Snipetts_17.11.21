@@ -19,7 +19,6 @@ def snippets_page(request):
     }
     return render(request, 'pages/view_snippets.html', context)
 
-
 def single_snippet_page(request, pk):
     try:
         snippet = Snippet.objects.get(id=pk)
@@ -27,11 +26,14 @@ def single_snippet_page(request, pk):
         raise Http404("Сниппет не найден..")
     context = {
         'pagename': 'Страница сниппета',
+        'name': 'Название',
+        'lang': 'Язык',
+        'creation_date': 'Создан',
+        'update_date': 'Обновлен',
         "snippet": snippet,
         "type": "view"
     }
     return render(request, 'pages/snippet_page.html', context)
-
 
 def add_snippet_page(request):
     if request.method == "GET":
@@ -71,6 +73,7 @@ def snippet_edit(request, pk):
     if request.method == "POST":
         form_data = request.POST
         snippet.name = form_data["name"]
+        snippet.lang = form_data["lang"]
         snippet.code = form_data["code"]
         snippet.save()
         return redirect("snippets-list")

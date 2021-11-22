@@ -73,6 +73,7 @@
             text-align: left;
             background: #60a839;
         }
+
     </style>
 </head>
 
@@ -89,13 +90,10 @@
                 <hr>
             </div>
         </div>
-
         {% block content %}
         {% endblock %}
-
     </div>
 </main>
-
 {% include 'inc/inc-footer.html' %}
 
 <!-- Optional JavaScript -->
@@ -107,6 +105,8 @@
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"></script>
 <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"-->
 <!--        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>-->
+<script src="{% static 'js/textarea.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 
 </body>
 </html>
