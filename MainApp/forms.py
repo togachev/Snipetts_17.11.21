@@ -13,7 +13,7 @@ class SnippetForm(ModelForm):
             "lang": "",
         }
         widgets = {
-            "name": TextInput(attrs = {"placeholder": "Название виджета", "class": "name"}),
+            "name": TextInput(attrs = {"placeholder": "Название сниппета", "class": "name"}),
             # "lang": TextInput(attrs = {"placeholder": "Язык программирования"})
         }
        # exclude = []

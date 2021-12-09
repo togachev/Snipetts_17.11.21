@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 LANG_CHOICES = (
+    ('', 'Выбор языка'),
     ("py", "python"),
     ("js", "javaScript"),
     ("cs", "C#")
