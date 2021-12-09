@@ -16,3 +16,4 @@ class Snippet(models.Model):
     update_date = models.DateTimeField(auto_now=True)
     rate = models.PositiveSmallIntegerField(null=False, blank=True, default=1)
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=True, null=True)
+    public = models.BooleanField(default=True) # true - public, false - private

@@ -7,6 +7,7 @@
                 <th scope="col">Номер</th>
                 <th scope="col">Название</th>
                 <th scope="col">Пользователь</th>
+                <th scope="col">Private</th>
             </tr>
             </thead>
             <tbody>
@@ -17,6 +18,7 @@
                         <a href="{% url 'snippet-page' pk=snippet.id %}">{{ snippet.name }}</a>
                     </td>
                     <td scope="row">{{ snippet.user }}</td>
+                    <td scope="row">{{ snippet.public }}</td>
                 </tr>
             {% endfor %}
             </tbody>
