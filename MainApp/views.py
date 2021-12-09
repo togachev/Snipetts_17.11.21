@@ -13,10 +13,19 @@ def index_page(request):
     return render(request, 'pages/index.html', context)
 
 def snippets_page(request):
+
     snippets = Snippet.objects.all()
     context = {
         'pagename': 'Список сниппетов',
         "snippets": snippets,
+    }
+    return render(request, 'pages/view_snippets.html', context)
+
+def snippet_my(request):
+    user_snippets = Snippet.objects.filter(user=request.user)
+    context = {
+        'pagename': 'Мои сниппеты',
+        "snippets": user_snippets,
     }
     return render(request, 'pages/view_snippets.html', context)
 
@@ -115,8 +124,11 @@ def login_page(request):
         if user is not None:
             auth.login(request, user)
         else:
-            # Return error message
-            pass
+            context = {
+                'pagename': 'Главная страница',
+                'errors': ['Неверный логин или пароль']
+            }
+            return render(request, 'pages/index.html', context)
 
     return redirect('home')
 
