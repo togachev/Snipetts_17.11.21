@@ -23,7 +23,7 @@
             </div>
             {% if request.user.is_authenticated %}
                 <span style="color:white;">Welcome, {{request.user.username }}</span>
-                <div><a href="{% url 'logout' %}">logout</a></div>
+                <div><a href="{% url 'logout' %}">Выйти</a></div>
             {% else %}
                 <div class="navbar-nav mr-right nav-item dropdown dropdown-menu-right">
                    <a class="btn btn-outline-primary my-2 my-sm-0 dropdown-toggle" href="#" id="navbarDropdown"
