@@ -19,7 +19,7 @@
                     <li class="form-inline" style="margin: 1px 5px !important;">
                         <a class="btn btn-outline-info" href="{% url 'snippets-list' %}">Сниппеты</a>
                     </li>
-                                        {% if request.user.is_authenticated %}
+                    {% if request.user.is_authenticated %}
                     <li class="form-inline">
                         <a class="btn btn-outline-info" href="{% url 'snippets-my' %}">Мои сниппеты</a>
                     </li>

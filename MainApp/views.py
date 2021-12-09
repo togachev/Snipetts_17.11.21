@@ -67,8 +67,11 @@ def add_snippet_page(request):
 
 def snippet_delete(request, pk):
     snippet = Snippet.objects.get(id=pk)
-    snippet.delete()
+    if request.user.is_authenticated:
+        snippet.user = request.user
+        snippet.delete()
     return redirect("snippets-list")
+
 
 
 def snippet_edit(request, pk):
@@ -89,7 +92,9 @@ def snippet_edit(request, pk):
         snippet.name = form_data["name"]
         snippet.lang = form_data["lang"]
         snippet.code = form_data["code"]
-        snippet.save()
+        if request.user.is_authenticated:
+            snippet.user = request.user
+            snippet.save()
         return redirect("snippets-list")
 
 def search_snippet(request):

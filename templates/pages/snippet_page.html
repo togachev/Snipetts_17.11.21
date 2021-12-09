@@ -26,13 +26,15 @@
             </div>
             <hr>
             <div class="row disabled">
+                {% if request.user.is_authenticated %}
+                    <div class="col col-1">
+                        <a href="{% url 'snippet-edit' pk=snippet.id %}" style=""><i class="fas fa-edit"></i></a>
+                    </div>
+                    <div class="col col-1">
+                        <a href="{% url 'snippet-delete' pk=snippet.id %}" style=""><i class="fas fa-trash-alt"></i></a>
+                    </div>
+                {% endif %}
 
-                <div class="col col-1">
-                    <a href="{% url 'snippet-edit' pk=snippet.id %}" style=""><i class="fas fa-edit"></i></a>
-                </div>
-                <div class="col col-1">
-                    <a href="{% url 'snippet-delete' pk=snippet.id %}" style=""><i class="fas fa-trash-alt"></i></a>
-                </div>
                 <div class="col col-10"></div>
             </div>
             <hr>
