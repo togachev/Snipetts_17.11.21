@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 LANG_CHOICES = (
     ("py", "python"),
@@ -13,3 +14,4 @@ class Snippet(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     rate = models.PositiveSmallIntegerField(null=False, blank=True, default=1)
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=True, null=True)

@@ -31,6 +31,7 @@ def single_snippet_page(request, pk):
         'lang': 'Язык',
         'creation_date': 'Создан',
         'update_date': 'Обновлен',
+        'user': 'Пользователь',
         "snippet": snippet,
         "type": "view"
     }
@@ -47,7 +48,10 @@ def add_snippet_page(request):
     if request.method == "POST":
         form = SnippetForm(request.POST)
         if form.is_valid():
-            form.save()
+            snippet = form.save(commit=False)
+            if request.user.is_authenticated:
+                snippet.user = request.user
+                snippet.save()
             return redirect("snippets-list")
         return render(request, 'pages/add_snippet.html', {'form': form})
 
