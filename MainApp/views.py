@@ -1,10 +1,11 @@
-from django.http import Http404
+from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render, redirect
 from MainApp.models import Snippet
 from django.core.exceptions import ObjectDoesNotExist
-from MainApp.forms import SnippetForm
+from MainApp.forms import SnippetForm, UserRegistrationForm
 from django.db.models import Q
 from django.contrib import auth
+
 
 
 
@@ -41,6 +42,7 @@ def single_snippet_page(request, pk):
         'creation_date': 'Создан',
         'update_date': 'Обновлен',
         'user': 'Пользователь',
+        'public': 'Приватность',
         "snippet": snippet,
         "type": "view"
     }
@@ -67,9 +69,13 @@ def add_snippet_page(request):
 
 def snippet_delete(request, pk):
     snippet = Snippet.objects.get(id=pk)
-    if request.user.is_authenticated:
-        snippet.user = request.user
+    # if request.user.is_authenticated:
+    #     snippet.user = request.user
+    #     snippet.delete()
+    if snippet.user == request.user:
         snippet.delete()
+    else:
+        raise HttpResponseForbidden
     return redirect("snippets-list")
 
 
@@ -92,6 +98,7 @@ def snippet_edit(request, pk):
         snippet.name = form_data["name"]
         snippet.lang = form_data["lang"]
         snippet.code = form_data["code"]
+        snippet.public = form_data["public"]
         if request.user.is_authenticated:
             snippet.user = request.user
             snippet.save()
@@ -140,3 +147,22 @@ def login_page(request):
 def logout(request):
     auth.logout(request)
     return redirect('home')
+
+def register(request):
+    if request.method == 'GET':
+        form = UserRegistrationForm()
+        context = {
+            'pagename': 'Регистрация пользователя',
+            'form': form
+        }
+        return render(request, 'pages/register.html', context)
+    else:
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+        context = {
+            'pagename': 'Регистрация пользователя',
+            'form': form
+        }
+        return render(request, 'pages/register.html', context)

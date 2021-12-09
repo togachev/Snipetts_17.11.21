@@ -26,7 +26,7 @@
             </div>
             <hr>
             <div class="row disabled">
-                {% if request.user.is_authenticated %}
+                {% if request.user == snippet.user %}
                     <div class="col col-1">
                         <a href="{% url 'snippet-edit' pk=snippet.id %}" style=""><i class="fas fa-edit"></i></a>
                     </div>
@@ -65,6 +65,15 @@
                     Код:
                     <div>
                         <textarea oninput="textAreaAdjust(this)" style="overflow:auto; width: 100%; min-height: 150px" name="code" >{{snippet.code}}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    private:
+                    <div>
+                        <input type="hidden" name="public" value="False" />
+                        <input type="checkbox" name="public" value="True" {% if snippet.public %}checked{% endif %}>
                     </div>
                 </div>
             </div>
