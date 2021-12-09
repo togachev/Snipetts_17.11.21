@@ -4,6 +4,7 @@ from MainApp.models import Snippet
 from django.core.exceptions import ObjectDoesNotExist
 from MainApp.forms import SnippetForm
 from django.db.models import Q
+from django.contrib import auth
 
 
 
@@ -99,3 +100,22 @@ def search_snippet(request):
         'result_not_found': 'Снипет не найден',
     }
     return render(request, 'pages/index.html', context)
+
+def login_page(request):
+    if request.method == 'POST':
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        # print("username =", username)
+        # print("password =", password)
+        user = auth.authenticate(request, username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+        else:
+            # Return error message
+            pass
+
+    return redirect('home')
+
+def logout(request):
+    auth.logout(request)
+    return redirect('home')

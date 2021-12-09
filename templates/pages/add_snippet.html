@@ -12,13 +12,12 @@
     <form method="post" novalidate>
         {% csrf_token %}
             <div class="row">
-                <div class="col-8 name">
-                {{ form.name|as_crispy_field }}
+                <div class="col-8">
+                <div class="name">{{ form.name|as_crispy_field }}</div>
                 {{ form.lang|as_crispy_field }}
                 {{ form.code|as_crispy_field }}
                 {{ form.rate|as_crispy_field }}
                 </div>
-<!--                test coomit-->
             </div>
         <button type="submit" class="btn btn-success">Создать</button>
     </form>
