@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'MainApp',
     'django_extensions',
     'crispy_forms',
+    'pygments_renderer',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

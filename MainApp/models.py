@@ -5,7 +5,7 @@ LANG_CHOICES = (
     ('', 'Выбор языка'),
     ("py", "python"),
     ("js", "javaScript"),
-    ("cs", "C#")
+    ("cs", "C#"),
 )
 
 class Snippet(models.Model):

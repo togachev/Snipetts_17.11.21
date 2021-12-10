@@ -7,15 +7,15 @@ from django.db.models import Q
 from django.contrib import auth
 
 
-
-
 def index_page(request):
     context = {'pagename': 'Главная страница'}
     return render(request, 'pages/index.html', context)
 
 def snippets_page(request):
-
-    snippets = Snippet.objects.filter(public=True)
+    if request.user.is_superuser:
+        snippets = Snippet.objects.all()
+    else:
+        snippets = Snippet.objects.filter(public=True)
     context = {
         'pagename': 'Список сниппетов',
         "snippets": snippets,
@@ -42,7 +42,7 @@ def single_snippet_page(request, pk):
         'creation_date': 'Создан',
         'update_date': 'Обновлен',
         'user': 'Пользователь',
-        'public': 'Приватность',
+        'public': 'Доступ',
         "snippet": snippet,
         "type": "view"
     }
@@ -63,21 +63,24 @@ def add_snippet_page(request):
             if request.user.is_authenticated:
                 snippet.user = request.user
                 snippet.save()
+            else:
+                # return redirect("errors-page")
+                context = {
+                    'pagename': 'Результат запроса',
+                    'result': 'В операции отказано',
+                }
+                return render(request, 'pages/errors.html', context)
             return redirect("snippets-list")
         return render(request, 'pages/add_snippet.html', {'form': form})
 
 
 def snippet_delete(request, pk):
     snippet = Snippet.objects.get(id=pk)
-    # if request.user.is_authenticated:
-    #     snippet.user = request.user
-    #     snippet.delete()
-    if snippet.user == request.user:
+    if snippet.user == request.user or request.user.is_superuser:
         snippet.delete()
     else:
-        raise HttpResponseForbidden
+        return redirect("errors-page")
     return redirect("snippets-list")
-
 
 
 def snippet_edit(request, pk):
@@ -99,9 +102,11 @@ def snippet_edit(request, pk):
         snippet.lang = form_data["lang"]
         snippet.code = form_data["code"]
         snippet.public = form_data["public"]
-        if request.user.is_authenticated:
+        if snippet.user == request.user or request.user.is_superuser:
             snippet.user = request.user
             snippet.save()
+        else:
+            return redirect("errors-page")
         return redirect("snippets-list")
 
 def search_snippet(request):
@@ -109,7 +114,7 @@ def search_snippet(request):
     if not id:
         context = {
             'pagename': 'Результат поиска',
-            'result_not_found':'Снипет не найден',
+            'result':'Снипет не найден',
         }
         return render(request, 'pages/index.html', context)
     try:
@@ -122,7 +127,7 @@ def search_snippet(request):
     context = {
         'pagename': 'Результат поиска',
         "snippets": snippet,
-        'result_not_found': 'Снипет не найден',
+        'result': 'Снипет не найден',
     }
     return render(request, 'pages/index.html', context)
 
@@ -138,7 +143,7 @@ def login_page(request):
         else:
             context = {
                 'pagename': 'Главная страница',
-                'errors': ['Неверный логин или пароль']
+                'result': 'Неверный логин или пароль'
             }
             return render(request, 'pages/index.html', context)
 
@@ -147,6 +152,13 @@ def login_page(request):
 def logout(request):
     auth.logout(request)
     return redirect('home')
+
+def errors_page(request):
+    context = {
+        'pagename': 'Результат запроса',
+        'result': 'В операции отказано',
+    }
+    return render(request, 'pages/errors.html', context)
 
 def register(request):
     if request.method == 'GET':

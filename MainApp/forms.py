@@ -9,14 +9,16 @@ class SnippetForm(ModelForm):
         # Описываем поля, которые будем заполнять в форме
         fields = ['id', 'name', 'lang', 'code', 'rate', 'public']
         labels = {
-            "name": "",
-            "lang": "",
+            "name": "Сниппет",
+            "lang": "Язык",
+            "rate": "Рейтинг",
+            "code": "Код",
+            "public": "Доступ(закрыт/открыт)",
         }
         widgets = {
-            "name": TextInput(attrs = {"placeholder": "Название сниппета", "class": "name"}),
-            # "lang": TextInput(attrs = {"placeholder": "Язык программирования"})
+            "name": TextInput(attrs = {"placeholder": "Введите название сниппета", "class": "name"}),
+            # "lang": TextInput(attrs = {"placeholder": "Язык программирования"}),
         }
-       # exclude = []
 
 #  настроить форму
 # https://django.fun/tutorials/usovershenstvovannoe-otobrazhenie-form-bootstrap-4-s-pomoshyu-django-crispy-forms/

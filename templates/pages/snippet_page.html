@@ -21,12 +21,12 @@
                     {{ user }}<input type="text" value="{{ snippet.user }}" class="form-control">
                 </div>
                 <div class="col col-3">
-                    {{ public }}<input type="text" value="{{ snippet.public }}" class="form-control">
+                    {{ public }}<input type="text" value="{{ snippet.public|yesno:'Публичный,Закрытый' }}" class="form-control">
                 </div>
             </div>
             <hr>
             <div class="row disabled">
-                {% if request.user == snippet.user %}
+                {% if request.user == snippet.user or request.user.is_superuser %}
                     <div class="col col-1">
                         <a href="{% url 'snippet-edit' pk=snippet.id %}" style=""><i class="fas fa-edit"></i></a>
                     </div>
@@ -39,10 +39,12 @@
             </div>
             <hr>
             <div class="row">
-                <div class="col">
+                <div class="col" >
                     Код:
                     <div class="" style="border:1px solid #ced4da; border-radius:5px;white-space: normal; padding: 1rem;">
-                        <p><pre>{{ snippet.code |linebreaks|safe|escape}}</pre></p>
+                    {% load i18n %}
+                    {% load pygmentize %}
+                        <p><pre>{{ snippet.code |pygmentize:snippet.lang}}</pre></p>
                     </div>
                 </div>
             </div>
@@ -64,13 +66,13 @@
                 <div class="col">
                     Код:
                     <div>
-                        <textarea oninput="textAreaAdjust(this)" style="overflow:auto; width: 100%; min-height: 150px" name="code" >{{snippet.code}}</textarea>
+                        <textarea style="overflow:auto; width: 100%; min-height: 150px" name="code" >{{snippet.code}}</textarea>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    private:
+                    Открытый:
                     <div>
                         <input type="hidden" name="public" value="False" />
                         <input type="checkbox" name="public" value="True" {% if snippet.public %}checked{% endif %}>

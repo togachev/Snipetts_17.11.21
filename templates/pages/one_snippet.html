@@ -6,8 +6,9 @@
             <tr>
                 <th scope="col">Номер</th>
                 <th scope="col">Название</th>
+                <th scope="col">Дата создания</th>
                 <th scope="col">Пользователь</th>
-                <th scope="col">Private</th>
+                <th scope="col">Доступ</th>
             </tr>
             </thead>
             <tbody>
@@ -17,8 +18,9 @@
                     <td>
                         <a href="{% url 'snippet-page' pk=snippet.id %}">{{ snippet.name }}</a>
                     </td>
+                    <td>{{ snippet.creation_date }}</td>
                     <td scope="row">{{ snippet.user }}</td>
-                    <td scope="row">{{ snippet.public }}</td>
+                    <td scope="row">{{ snippet.public|yesno:"Публичный,Закрытый" }}</td>
                 </tr>
             {% endfor %}
             </tbody>

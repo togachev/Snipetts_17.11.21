@@ -16,8 +16,8 @@
                 <div class="name">{{ form.name|as_crispy_field }}</div>
                 {{ form.lang|as_crispy_field }}
                 {{ form.code|as_crispy_field }}
-                {{ form.rate|as_crispy_field }}
-                {{ form.public|as_crispy_field }}
+                    <div class="rate">{{ form.rate|as_crispy_field }}</div>
+                    <div class="public">{{ form.public|as_crispy_field }}</div>
                 </div>
             </div>
         <button type="submit" class="btn btn-success">Создать</button>
