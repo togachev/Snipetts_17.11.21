@@ -97,11 +97,13 @@ def snippet_edit(request, pk):
         return render(request, 'pages/snippet_page.html', context)
 
     if request.method == "POST":
+
         form_data = request.POST
+        public = form_data.get("public") == 'on'
         snippet.name = form_data["name"]
         snippet.lang = form_data["lang"]
         snippet.code = form_data["code"]
-        snippet.public = form_data["public"]
+        snippet.public = public
         if snippet.user == request.user or request.user.is_superuser:
             snippet.user = request.user
             snippet.save()
